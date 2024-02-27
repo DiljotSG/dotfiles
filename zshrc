@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 export PATH=/opt/homebrew/bin:$PATH
 
 # Set Spaceship ZSH as a prompt
-source "/opt/homebrew/opt/spaceship/spaceship.zsh"
+source /usr/local/opt/spaceship/spaceship.zsh
 
 # Aliases
 alias reset-lp="defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock"

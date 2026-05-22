@@ -74,11 +74,11 @@ if [[ "$OS" == "Darwin" ]]; then
         echo "✓ FiraCode font already installed"
     fi
     
-    # Link zshrc
+    # Copy zshrc
     echo ""
-    echo "Linking zshrc_darwin..."
-    ln -sf ~/Developer/git/dotfiles/zshrc_darwin ~/.zshrc
-    echo "✓ zshrc symlink created"
+    echo "Copying zshrc_darwin..."
+    cp ~/Developer/git/dotfiles/zshrc_darwin ~/.zshrc
+    echo "✓ zshrc copied"
 
 # ============================================================================
 # LINUX SPECIFIC SETUP
@@ -161,11 +161,11 @@ elif [[ "$OS" == "Linux" ]]; then
         echo "  Install FiraCode on your host machine's terminal instead"
     fi
     
-    # Link zshrc
+    # Copy zshrc
     echo ""
-    echo "Linking zshrc_linux..."
-    ln -sf ~/Developer/git/dotfiles/zshrc_linux ~/.zshrc
-    echo "✓ zshrc symlink created"
+    echo "Copying zshrc_linux..."
+    cp ~/Developer/git/dotfiles/zshrc_linux ~/.zshrc
+    echo "✓ zshrc copied"
 
 else
     echo "Unknown operating system: $OS"

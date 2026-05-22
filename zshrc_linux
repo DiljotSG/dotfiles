@@ -1,0 +1,69 @@
+# ============================================================================
+# OH-MY-ZSH CONFIGURATION
+# ============================================================================
+export ZSH="$HOME/.oh-my-zsh"
+plugins=(git rails)
+source $ZSH/oh-my-zsh.sh
+
+# ============================================================================
+# CORE PATH & ENVIRONMENT
+# ============================================================================
+export PATH="${HOME}/bin:/usr/local/bin:$PATH"
+
+# ============================================================================
+# SPACESHIP PROMPT
+# ============================================================================
+source "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh"
+SPACESHIP_DIR_TRUNC_REPO=false
+
+# ============================================================================
+# GIT CONFIGURATION
+# ============================================================================
+autoload -Uz compinit && compinit
+export GIT_EDITOR="cursor --wait"
+export GIT_MERGE_AUTOEDIT=no
+
+# ============================================================================
+# SHELL ENHANCEMENTS
+# ============================================================================
+# Autojump - smart directory jumping
+[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
+
+# Autosuggestions - fish-like command suggestions
+source $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# ============================================================================
+# DIRECTORY ALIASES
+# ============================================================================
+alias to-git="j ~/Developer/Git"
+alias to-wt="j ~/Developer/Worktrees"
+alias to-workspace="j ~/Developer/Workspace"
+
+# ============================================================================
+# GIT WORKTREE HELPER
+# ============================================================================
+# Clone repo into ./<repo>/<default-branch> structure
+# Usage: gwtclone git@github.com:pcln/supply_chain.git
+gwtclone() {
+  emulate -L zsh
+  local url="${1:?usage: gwtclone <ssh-url>}"
+  local name branch dest
+  name="${${url##*/}%.git}"
+  branch=$(
+    git ls-remote --symref "$url" HEAD 2>/dev/null | command awk '
+      /^ref: refs\/heads\// {
+        b = $0
+        sub(/^ref: refs\/heads\//, "", b)
+        sub(/[[:space:]].*/, "", b)
+        print b
+        exit
+      }'
+  )
+  branch="${branch:?gwtclone: could not resolve default branch for $url}"
+  dest="${name}/${branch}"
+
+  mkdir -p "$dest" || return
+  git clone "$url" "$dest" --recurse-submodules || return
+  cd "$dest" || return
+  echo "Ready: $(pwd -P)"
+}

@@ -164,7 +164,7 @@ elif [[ "$OS" == "Linux" ]]; then
     # Copy zshrc
     echo ""
     echo "Copying zshrc_linux..."
-    cp ~/Developer/git/dotfiles/zshrc_linux ~/.zshrc
+    cp ~/dotfiles/zshrc_linux ~/.zshrc
     echo "✓ zshrc copied"
 
 else
